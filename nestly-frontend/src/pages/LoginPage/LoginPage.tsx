@@ -75,7 +75,7 @@ const LoginPage = () => {
                             name="email"
                             control={control}
                             render={({field})=>{
-                                return <input className={styles.Input} placeholder="you@example.com" {...field}></input>
+                                return <input className={styles.Input} placeholder="you@example.com" { ...field }></input>
                             }}
                             />
                             <PrimaryBtn onClick={()=>{

@@ -1,16 +1,23 @@
+import { useNavigate } from "react-router-dom";
 import { LogoName } from "../../../constants/constants";
 import { PrimaryBtn } from "../Button/Button";
 import styles from "./Header.module.scss";
 
 
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.Header}>
         <div className={styles.LogoContainer}>
-            <h2 className={styles.Logo}>{LogoName}</h2>
+            <h2 onClick={()=>{
+              navigate('/')
+            }} className={styles.Logo}>{LogoName}</h2>
         </div>
         <div className={styles.LoginBtnContainer}>
-            <PrimaryBtn>Login</PrimaryBtn>
+            <PrimaryBtn onClick={()=>{
+              navigate('/login')
+            }}>Login</PrimaryBtn>
         </div>
 
     </div>
