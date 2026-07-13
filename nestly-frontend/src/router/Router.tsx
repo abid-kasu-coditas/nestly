@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../pages/Layout/Layout";
 import LandingPage from "../pages/LandingPage/LandingPage";
+import LoginPage from "../pages/LoginPage/LoginPage";
 
 export const router = createBrowserRouter([
     {
@@ -9,6 +10,11 @@ export const router = createBrowserRouter([
         children: [
             {
                 element: <LandingPage/>,
+                index:true
+            },
+            {
+                element: <LoginPage/>,
+                path: "/login",
                 index:true
             }
         ]

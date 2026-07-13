@@ -1,0 +1,52 @@
+@use "/src/assets/styles/mixin" as *;
+
+
+.LoginPage {
+    @include FlexBox;
+    position: relative;
+}
+
+.LoginPageOverlayContainer {
+    display: grid;
+    @include AbsolutePosition;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    box-shadow: 1px 1px 10px gray;
+    padding: 2rem 1rem;
+}
+
+.LoginImage {
+    background-image: url('/login-page-images/login.png');
+    background-size: cover;
+}
+
+.LoginBox {
+    @include FlexBox;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.LoginForm {
+    @include FlexBox;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.Input {
+    padding:0.5rem 1rem;
+}
+
+
+.EmailInput {
+    display: flex;
+    gap: 1rem;
+}
+
+.DisabledBtn {
+    color: gray;
+    border-color: gray;
+    &:hover {
+        background-color: transparent;
+        color: gray;
+    }
+}
