@@ -37,8 +37,8 @@
 }
 
 
-.EmailInput {
-    display: flex;
+.FormInput {
+    @include FlexBox;
     gap: 1rem;
 }
 

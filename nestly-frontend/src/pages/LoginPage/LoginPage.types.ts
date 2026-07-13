@@ -8,6 +8,8 @@ export interface LoginState {
     otpVerified: boolean;
 }
 
+type LoginType = "setOtpSent" | "setOtpVerified" 
+
 export type LoginAction = {
-    type: string;
+    type: LoginType;
 }
