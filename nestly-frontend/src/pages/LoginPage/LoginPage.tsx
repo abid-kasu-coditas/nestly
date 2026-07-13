@@ -4,6 +4,7 @@ import { PrimaryBtn } from "../../components/ui-components/Button/Button"
 import type { LoginAction, LoginData, LoginState } from "./LoginPage.types";
 import { useReducer } from "react";
 import CheckCircleIcon from '@mui/icons-material/CheckCircleOutlined';
+import { useNavigate } from "react-router-dom";
 
 
 const initialState = {
@@ -29,6 +30,7 @@ const reducer = (data: LoginState, action: LoginAction) => {
 const LoginPage = () => {
 
     const [state, dispatch] = useReducer(reducer, initialState);
+    const navigate = useNavigate();
 
     const {  handleSubmit, control,  formState: { isLoading }} = useForm<LoginData>();
     const handleLogin = async(data: LoginData) => {
@@ -36,6 +38,9 @@ const LoginPage = () => {
             resolve("done")
         })
         console.log("Logged in",response)
+        if(state.otpSent && state.otpVerified){
+            navigate('/dashboardRedirector')
+        }
     }
 
     const fetchOTP = () => {

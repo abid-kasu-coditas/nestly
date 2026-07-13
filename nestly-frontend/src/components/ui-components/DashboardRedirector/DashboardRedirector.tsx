@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const DashboardRedirector = () => {
     const user = localStorage.getItem('token');
@@ -8,11 +9,11 @@ const DashboardRedirector = () => {
         navigate('/')
     }
 
-  return (
-    <div>
-        Sucess!
-    </div>
-  )
+    useEffect(()=>{
+        navigate('/properties')
+    },[])
+
+    return <Outlet />
 }
 
 export default DashboardRedirector

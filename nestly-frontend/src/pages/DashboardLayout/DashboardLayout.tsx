@@ -1,8 +1,12 @@
-import React from 'react'
+import { Outlet } from 'react-router-dom'
+import styles from './DashboardLayout.module.scss'
 
 const DashboardLayout = () => {
   return (
-    <div>Login Success!</div>
+    <div className={styles.DashboardLayout}>
+        <div></div>
+        <Outlet />
+    </div>
   )
 }
 
