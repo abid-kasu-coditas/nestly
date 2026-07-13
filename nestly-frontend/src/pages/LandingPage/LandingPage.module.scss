@@ -1,8 +1,14 @@
+@use "/src/assets/styles/mixin" as *;
+@use "/src/assets/styles/variables" as *;
+
+
 .LandingPage {
     background: url('/landing-page-images/house-1.jpg');
     animation: slideShow infinite ease;
     animation-duration: 10s;
+    position: relative;
 }
+
 
 
 @keyframes slideShow {
@@ -25,4 +31,38 @@
         background: url('/landing-page-images/house-3.jpg');
         background-size: cover;
     }
+}
+
+.LandingPageOverlayContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.637);
+    backdrop-filter: blur(2px);
+    @include FlexBox;
+}
+
+.TextContainer {
+    @include FlexBox;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 1.1rem;
+}
+
+.TextHeadingContainer {
+    @include FlexBox;
+    flex-direction: column;
+    
+}
+
+.TextHeading {
+    font-size: 3rem;
+    font-family: $logo-font-family;
+}
+
+.TextContent {
+    text-align: center;
+    padding: 1rem;
 }

@@ -1,14 +1,12 @@
+import { RouterProvider } from "react-router-dom";
 import styles from "./App.module.scss";
-import Header from "./components/ui-components/Header/Header";
-import LandingPage from "./pages/LandingPage/LandingPage";
+import { router } from "./router/Router";
+
 
 const App = () => {
-  return (
-    <div className={styles.App}>
-      <Header/>
-      <LandingPage/>
-    </div>
-  )
+  return <>
+    <RouterProvider router={router}/>
+  </>
 }
 
 export default App
