@@ -1,0 +1,28 @@
+.LandingPage {
+    background: url('/landing-page-images/house-1.jpg');
+    animation: slideShow infinite ease;
+    animation-duration: 10s;
+}
+
+
+@keyframes slideShow {
+
+    0% {
+        background: url('/landing-page-images/house-3.jpg');
+        background-size: cover;
+    }
+    33% {
+        background: url('/landing-page-images/house-1.jpg');
+        background-size: cover;
+
+    }
+    66% {
+        background: url('/landing-page-images/house-2.jpg');
+        background-size: cover;
+        
+    }
+    100% {
+        background: url('/landing-page-images/house-3.jpg');
+        background-size: cover;
+    }
+}
