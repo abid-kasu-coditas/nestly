@@ -1,0 +1,22 @@
+@use "/src/assets/styles/mixin" as *;
+@use "/src/assets/styles/variables" as *;
+.Sidebar {
+    padding: 1rem;
+    border: thin solid transparent;
+    border-right-color: #000;
+}
+
+.SidebarOptionsContainer {
+    @include FlexBox;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.SidebarOptions {
+    padding: 0.4rem;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: $primary-hover-color;
+    }
+}
