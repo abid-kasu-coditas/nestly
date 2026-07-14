@@ -1,10 +1,11 @@
 import { Outlet } from 'react-router-dom'
 import styles from './DashboardLayout.module.scss'
+import Sidebar from '../../components/ui-components/Sidebar/Sidebar'
 
 const DashboardLayout = () => {
   return (
     <div className={styles.DashboardLayout}>
-        <div></div>
+        <Sidebar properties={['properties', 'favourites']}/>
         <Outlet />
     </div>
   )

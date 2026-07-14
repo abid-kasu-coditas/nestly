@@ -6,6 +6,7 @@ import styles from "./Header.module.scss";
 
 const Header = () => {
   const navigate = useNavigate();
+  
 
   return (
     <div className={styles.Header}>

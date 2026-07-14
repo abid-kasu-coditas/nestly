@@ -5,6 +5,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import AuthGuard from "../components/ui-components/AuthGuard/AuthGuard";
 import DashboardLayout from "../pages/DashboardLayout/DashboardLayout";
 import DashboardRedirector from "../components/ui-components/DashboardRedirector/DashboardRedirector";
+import ManageUsers from "../pages/ManageUsers/ManageUsers";
 
 export const router = createBrowserRouter([
     {
@@ -29,7 +30,12 @@ export const router = createBrowserRouter([
                     },
                     {
                         element:<DashboardLayout/>,
-                        path:"/properties"
+                        children:[
+                            {
+                                element:<ManageUsers/>,
+                                path: "/manage"
+                            }
+                        ]
                     }
                 ]
             }

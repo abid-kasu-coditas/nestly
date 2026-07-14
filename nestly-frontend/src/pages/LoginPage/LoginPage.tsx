@@ -5,6 +5,8 @@ import type { LoginAction, LoginData, LoginState } from "./LoginPage.types";
 import { useReducer } from "react";
 import CheckCircleIcon from '@mui/icons-material/CheckCircleOutlined';
 import { useNavigate } from "react-router-dom";
+import { saveUser, userSlice } from "../../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 
 const initialState = {
@@ -31,14 +33,18 @@ const LoginPage = () => {
 
     const [state, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();
+    const dispatchFn = useDispatch();
 
     const {  handleSubmit, control,  formState: { isLoading }} = useForm<LoginData>();
     const handleLogin = async(data: LoginData) => {
-        const response = await new Promise((resolve, reject)=>{
-            resolve("done")
-        })
-        console.log("Logged in",response)
+        
         if(state.otpSent && state.otpVerified){
+            const user = {
+                id: "1",
+                role: "Admin",
+                email: "admin@demo.io"
+            }
+            dispatchFn(saveUser(user))
             navigate('/dashboardRedirector')
         }
     }
@@ -46,13 +52,13 @@ const LoginPage = () => {
     const fetchOTP = () => {
         setTimeout(()=>{
             dispatch({type:"setOtpSent"})
-        }, 3000)
+        }, 1000)
     }
 
     const verifyOTP = () => {
         setTimeout(()=>{
             dispatch({type:"setOtpVerified"})
-        }, 3000)
+        }, 1000)
     }   
 
 
@@ -67,6 +73,7 @@ const LoginPage = () => {
                         {state.otpSent ? <>
                             <Controller
                             name="otp"
+                            key={'otp-field'}
                             control={control}
                             render={({field})=>{
                                 return <input className={styles.Input} placeholder="1234" {...field}></input>
@@ -78,6 +85,7 @@ const LoginPage = () => {
                         </> : <>
                             <Controller
                             name="email"
+                            key={'email-field'}
                             control={control}
                             render={({field})=>{
                                 return <input className={styles.Input} placeholder="you@example.com" { ...field }></input>
