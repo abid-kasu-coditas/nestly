@@ -28,6 +28,6 @@ class Properties(TimeStampedBase):
     rent_amount = Column(Integer, nullable=False)
     amenities = Column(String, nullable=False)
     status = Column(Enum(Property_status), default=Property_status.PENDING, index=True)
-
+    
     media = relationship("PropertyMedia", back_populates="property", cascade="all, delete-orphan")
     

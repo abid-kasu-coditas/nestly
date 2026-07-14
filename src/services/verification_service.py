@@ -21,7 +21,7 @@ async def run_verification_panel_task(property_id):
             "photo_count": len(prop.media),
             "comparable_rents": comparables,
         })
-
+    
         completeness, consistency, pricing, red_flags = await asyncio.gather(
             review_completeness(listing_json),
             review_consistency(listing_json),
@@ -47,7 +47,7 @@ async def run_verification_panel_task(property_id):
 
     finally:
         db.close()
-
+                
 def run_verification_panel_task_sync(property_id):
     asyncio.run(run_verification_panel_task(property_id))
 

@@ -21,3 +21,5 @@ class PropertyMedia(TimeStampedBase):
 
 
     property = relationship("Properties", back_populates="media")
+    
+    
