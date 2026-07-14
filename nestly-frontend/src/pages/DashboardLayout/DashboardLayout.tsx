@@ -21,10 +21,8 @@ const DashboardLayout = () => {
             </span>
           }
           </div>
-          <div className={styles.OutletDiv}>
             <Outlet />
-          </div>
-    </div>
+      </div>
   )
 }
 

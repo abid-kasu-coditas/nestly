@@ -7,6 +7,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircleOutlined';
 import { useNavigate } from "react-router-dom";
 import { saveUser, userSlice } from "../../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
+import { useFetchOTPMutation, useLoginMutation } from "../../redux/slices/authApiSlice";
 
 
 const initialState = {
@@ -34,8 +35,10 @@ const LoginPage = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const navigate = useNavigate();
     const dispatchFn = useDispatch();
-
+    const [ login ] = useLoginMutation();
     const {  handleSubmit, control,  formState: { isLoading }} = useForm<LoginData>();
+
+    const [fetchOTPservice] = useFetchOTPMutation();
     const handleLogin = async(data: LoginData) => {
         
         if(state.otpSent && state.otpVerified){
@@ -49,10 +52,10 @@ const LoginPage = () => {
         }
     }
 
-    const fetchOTP = () => {
-        setTimeout(()=>{
-            dispatch({type:"setOtpSent"})
-        }, 1000)
+    const fetchOTP = async(data: LoginData) => {
+        console.log("OTP Requested", data)
+        const response = await fetchOTPservice(data);
+        console.log(response)
     }
 
     const verifyOTP = () => {
@@ -68,7 +71,7 @@ const LoginPage = () => {
             <div className={styles.LoginImage}></div>
             <div className={styles.LoginBox}>
                 <h2>Login</h2>
-                <form className={styles.LoginForm} onSubmit={handleSubmit(handleLogin)}>
+                <form className={styles.LoginForm} onSubmit={!state.otpSent ? handleSubmit(fetchOTP) : handleSubmit(handleLogin)}>
                     <div className={styles.FormInput}>
                         {state.otpSent ? <>
                             <Controller
@@ -79,9 +82,7 @@ const LoginPage = () => {
                                 return <input className={styles.Input} placeholder="1234" {...field}></input>
                             }}
                             />
-                            {state.otpVerified ? <CheckCircleIcon color="success"/> : <PrimaryBtn onClick={()=>{
-                                verifyOTP();
-                            }}>Verify OTP</PrimaryBtn>}
+                            {state.otpVerified ? <CheckCircleIcon color="success"/> : <PrimaryBtn> Verify OTP</PrimaryBtn>}
                         </> : <>
                             <Controller
                             name="email"
@@ -91,9 +92,7 @@ const LoginPage = () => {
                                 return <input className={styles.Input} placeholder="you@example.com" { ...field }></input>
                             }}
                             />
-                            <PrimaryBtn onClick={()=>{
-                                fetchOTP();
-                            }}>Get OTP</PrimaryBtn>
+                            <PrimaryBtn>Get OTP</PrimaryBtn>
                         </>}
                     </div>
                     {state.otpVerified ? <PrimaryBtn>{isLoading ? "Logging in" : "Login"}</PrimaryBtn> : <PrimaryBtn className={styles.DisabledBtn} disabled>Login</PrimaryBtn>}

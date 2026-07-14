@@ -3,6 +3,4 @@
 .PropertyListing {
     display: grid;
     grid-template-rows: auto 1fr;
-    background-color: aqua;
-    @include FlexBox;
 }
