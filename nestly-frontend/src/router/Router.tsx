@@ -27,6 +27,7 @@ export const router = createBrowserRouter([
                 children:[
                     {
                         element:<DashboardRedirector/>,
+                        index:true,
                         path: "/dashboardRedirector"
                     },
                     {

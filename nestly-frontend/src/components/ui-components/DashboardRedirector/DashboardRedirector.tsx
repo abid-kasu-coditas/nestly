@@ -7,17 +7,20 @@ const DashboardRedirector = () => {
     
     const user  = useAppSelector((state)=> state.authUser.user);
     const navigate = useNavigate();
-
-    if(!user){
-        navigate('/')
+    console.log("redirector:", user)
+    const token = localStorage.getItem("token")
+    if(!token){
+        return
     }
 
     useEffect(()=>{
+        console.log("RUnning redirector")
         switch(user?.role){
-            case "Admin":
+            case "ADMIN":
+                console.log("admin")
                 navigate('/manage')
                 break;
-            case "User":
+            case "USER":
                 navigate('/properties')
                 break;
         }

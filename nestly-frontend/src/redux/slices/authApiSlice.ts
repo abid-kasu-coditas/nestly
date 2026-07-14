@@ -21,7 +21,7 @@ export const authApi = apiSlice.injectEndpoints({
             query: (token: string) => ({
                 url: 'users/me',
                 headers : {
-                    'Authorization' : token
+                    'Authorization' : `Bearer ${token}`
                 }
             })
         }),
