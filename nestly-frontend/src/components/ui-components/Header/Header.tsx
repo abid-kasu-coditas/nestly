@@ -6,10 +6,13 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store/hooks";
 import { logout } from "../../../redux/slices/userSlice";
 
 
+
 const Header = () => {
   const navigate = useNavigate();
-  const user = useAppSelector(state => state.authUser.user)
+  const user = useAppSelector(state => state.authUser.user);
+  const token = localStorage.getItem('token')
   const dispatch = useAppDispatch();
+
 
   return (
     <div className={styles.Header}>
@@ -19,7 +22,7 @@ const Header = () => {
             }} className={styles.Logo}>{LogoName}</h2>
         </div>
         <div className={styles.LoginBtnContainer}>
-           {user ?  <PrimaryBtn onClick={()=>{
+           {token ?  <PrimaryBtn onClick={()=>{
               localStorage.removeItem('token')
               dispatch(logout())
               navigate('/')

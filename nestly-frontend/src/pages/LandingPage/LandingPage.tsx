@@ -2,15 +2,17 @@ import { useEffect } from "react";
 import { Content_Text, LogoName } from "../../constants/constants";
 import styles from "./LandingPage.module.scss";
 import { useAppSelector } from "../../redux/store/hooks";
+import { useNavigate } from "react-router-dom";
 
 
 const LandingPage = () => {
   const user = useAppSelector(state => state.authUser.user)
   const token = localStorage.getItem("token")
+  const navigate = useNavigate();
 
   useEffect(()=>{
     if(token || user){
-      
+      navigate('/dashboardRedirector')    
     }
   },[])
 

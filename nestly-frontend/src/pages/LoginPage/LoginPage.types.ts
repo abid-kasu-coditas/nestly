@@ -1,6 +1,6 @@
 export interface LoginData {
     email: string;
-    otp: string
+    code: string
 }
 
 export interface LoginState {
