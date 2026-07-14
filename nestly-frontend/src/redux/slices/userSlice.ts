@@ -16,11 +16,14 @@ export const userSlice = createSlice({
     reducers: {
         saveUser: (state: authState, action : PayloadAction<User>) => {
             state.user = action.payload
+        },
+        logout: (state : authState) => {
+            state.user = null
         }
     },
 })
 
 
-export const { saveUser } = userSlice.actions;
+export const { saveUser, logout } = userSlice.actions;
 
 export default userSlice.reducer

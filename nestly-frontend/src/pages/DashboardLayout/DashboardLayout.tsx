@@ -5,7 +5,7 @@ import Sidebar from '../../components/ui-components/Sidebar/Sidebar'
 const DashboardLayout = () => {
   return (
     <div className={styles.DashboardLayout}>
-        <Sidebar properties={['properties', 'favourites']}/>
+        <Sidebar/>
         <Outlet />
     </div>
   )

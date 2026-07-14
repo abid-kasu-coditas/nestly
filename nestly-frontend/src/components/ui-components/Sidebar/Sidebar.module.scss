@@ -4,6 +4,7 @@
     padding: 1rem;
     border: thin solid transparent;
     border-right-color: #000;
+    min-width: 20vw;
 }
 
 .SidebarOptionsContainer {
@@ -15,7 +16,7 @@
 .SidebarOptions {
     padding: 0.4rem;
     cursor: pointer;
-    
+
     &:hover {
         background-color: $primary-hover-color;
     }

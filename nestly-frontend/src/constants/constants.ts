@@ -6,10 +6,12 @@ export const Content_Text = "A Property Rental and Verification Platform.";
 export const Sidebar_items = {
     Admin : [
         {
-            users: "/users"
+            name: "Users",
+            link: "manage"
         },
         {
-            listings : "/listings"
+            name: "Listings",
+            link: "listings"
         }
     ],
     User : [
@@ -21,3 +23,4 @@ export const Sidebar_items = {
         }
     ],
 }
+

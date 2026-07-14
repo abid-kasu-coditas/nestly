@@ -1,0 +1,6 @@
+@use "/src/assets/styles/mixin" as *;
+
+.PropertyListing {
+    @include FlexBox;
+    align-items: start;
+}

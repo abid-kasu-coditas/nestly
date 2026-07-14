@@ -1,8 +1,19 @@
+import { useEffect } from "react";
 import { Content_Text, LogoName } from "../../constants/constants";
 import styles from "./LandingPage.module.scss";
+import { useAppSelector } from "../../redux/store/hooks";
 
 
 const LandingPage = () => {
+  const user = useAppSelector(state => state.authUser.user)
+  const token = localStorage.getItem("token")
+
+  useEffect(()=>{
+    if(token || user){
+      
+    }
+  },[])
+
   return (
     <div className={styles.LandingPage}>
         <div className={styles.LandingPageOverlayContainer}>
