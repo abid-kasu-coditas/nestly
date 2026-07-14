@@ -1,0 +1,8 @@
+@use "/src/assets/styles/mixin" as *;
+
+.AddUserModal {
+    @include AbsolutePosition;
+    @include FlexBox;
+    background-color: gray;
+    
+}
