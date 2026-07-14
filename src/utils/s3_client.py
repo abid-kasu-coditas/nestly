@@ -21,11 +21,11 @@ def upload_file_to_s3(doc: str , folder : str) -> str:
     if ext not in {"pdf", "jpg", "png", "docx"}:
             raise HTTPException(status_code=400, detail="Invalid file type. Allowed: pdf, jpg, png, docx")
     
-    key = f"{doc.filename}/{uuid.uuid4()}"
+    object_name = f"{uuid.uuid4()}_house"
     
     try:
         
-        response = s3_client.file_upload(doc,BUCKET_NAME,key)
+        response = s3_client.file_upload(doc.file , BUCKET_NAME , object_name)
         
     except ClientError as e:
         logging.error(e)
