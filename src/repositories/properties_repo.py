@@ -1,42 +1,25 @@
 from sqlalchemy.orm import Session
-from src.schemas.properties_schema import Property_list_schema , Properties_response_schema
-from src.models.properties import Properties , Property_status 
+from src.models.properties import Properties, PropertyMedia, Property_status, MediaType
 from uuid import UUID
-from fastapi import UploadFile , HTTPException
-import os
-from src.core.config import settings
 
-def apply_for_listing(db : Session ,property : Property_list_schema , photo : ) -> Properties_response_schema:
-    
-    #check if the property exist and its status is not equal to approved
-    
-    property_to_be_approved = db.query(Properties).filter(property.tittle == Properties.tittle).first()
-    
-    if property_to_be_approved.status == Property_status.PENDING:
-        
-        db_property = Properties(tittle = property.tittle,
-        description = property.description,
-        Location = property.Location,
-        rent_amount = property.rent_amount ,
-        amenities = property.amenities)
-    
-        db.add(db_property)
-        db.flush()
-        
-        
-        
-        #photo to upload
-        if photo and photo.filename:
-            ext = photo.filename.rsplit(".", 1)[-1].lower()
-        if ext not in {"pdf", "jpg", "png", "docx"}:
-            db.rollback()
-            raise HTTPException(status_code=400, detail="Invalid file type. Allowed: pdf, jpg, png, docx")
+def create_property(db: Session, owner_id: UUID, title: str, description: str,location: str, rent_amount: int, amenities: str) -> Properties:
+    db_property = Properties( owner_id=owner_id,title=title,description=description,location=location,
+        rent_amount=rent_amount, amenities=amenities,
+        status=Property_status.PENDING)
+    db.add(db_property)
+    db.flush()
+    return db_property
 
-        os.makedirs(settings.LOCAL_UPLOADS_DIR, exist_ok=True)
-        
+def add_media(db: Session, property_id: UUID, file_url: str, media_type: MediaType) -> PropertyMedia:
+    media = PropertyMedia(property_id=property_id, file_url=file_url, media_type=media_type)
+    db.add(media)
+    return media
 
-        
-        temp_file_path = os.path.join(settings.LOCAL_UPLOADS_DIR, photo.filename)
-    
+def get_comparable_rents(db: Session, location: str, exclude_id: UUID | None = None, limit: int = 10) -> list[int]:
+    rent = db.query(Properties.rent_amount).filter(Properties.location == location,Properties.status == Property_status.APPROVED)
+    if exclude_id:
+        rent = rent.filter(Properties.id != exclude_id)
+    return [r[0] for r in rent.limit(limit).all()]
 
-        pass
+def get_property_by_id(db: Session, property_id: UUID) -> Properties | None:
+    return db.query(Properties).filter(Properties.id == property_id).first()
