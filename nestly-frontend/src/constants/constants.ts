@@ -16,11 +16,14 @@ export const Sidebar_items = {
     ],
     User : [
         {
-            properties: "/properties"
+            name: "Properties",
+            link: "properties"
         },
         {
-            Favourites : "/favourites"
-        }
+            name: "Favourites",
+            link: "favourites"
+        },
+
     ],
 }
 

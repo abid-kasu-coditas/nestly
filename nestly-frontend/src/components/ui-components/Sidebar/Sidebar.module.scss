@@ -2,8 +2,7 @@
 @use "/src/assets/styles/variables" as *;
 .Sidebar {
     padding: 1rem;
-    border: thin solid transparent;
-    border-right-color: #000;
+    box-shadow: 1px 1px 10px gray;
     min-width: 20vw;
 }
 
@@ -14,10 +13,23 @@
 }
 
 .SidebarOptions {
+    min-width: 100%;
     padding: 0.4rem;
+    text-align: center; 
     cursor: pointer;
-
     &:hover {
         background-color: $primary-hover-color;
     }
+}
+
+.SidebarCloseBtnContainer {
+    display: flex;
+    
+}
+
+.SidebarCloseBtn {
+    &:hover {
+        background-color: aquamarine;
+    }
+    cursor: pointer;
 }

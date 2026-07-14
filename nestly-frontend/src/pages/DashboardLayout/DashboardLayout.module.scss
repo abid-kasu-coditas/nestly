@@ -1,4 +1,25 @@
 .DashboardLayout {
     display: grid;
     grid-template-columns: auto 1fr;
+
 }
+
+.OutletDiv {
+    display: flex;
+    justify-content: center;
+}
+
+.SidebarContainer {
+    display: flex;
+}
+
+
+.OpenSidebar {
+    padding: 1rem;
+    position: absolute;
+}
+
+.OpenSidebarBtn {
+    cursor: pointer;
+}
+

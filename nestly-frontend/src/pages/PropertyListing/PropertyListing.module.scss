@@ -1,6 +1,8 @@
 @use "/src/assets/styles/mixin" as *;
 
 .PropertyListing {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background-color: aqua;
     @include FlexBox;
-    align-items: start;
 }
