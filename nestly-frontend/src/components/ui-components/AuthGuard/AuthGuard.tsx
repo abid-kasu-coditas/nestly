@@ -1,20 +1,20 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 import { useGetMeMutation } from '../../../redux/slices/authApiSlice';
 import { saveUser } from '../../../redux/slices/userSlice';
 import { useEffect } from 'react';
-import { useAppSelector } from '../../../redux/store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../redux/store/hooks';
 
 const AuthGuard = () => {
 
     const token = localStorage.getItem("token")
     const [getMeService] = useGetMeMutation();
     const user = useAppSelector(state => state.authUser.user)
+    const dispatch = useAppDispatch();
 
     const fetchMe = async() => {
       const response = await getMeService(localStorage.getItem('token') as string).unwrap();
       if(response.id){
-        saveUser(response)
-        console.log(response)
+        dispatch(saveUser(response))
       }
 
     }
@@ -23,7 +23,6 @@ const AuthGuard = () => {
     }
 
     useEffect(()=>{
-      console.log("Authguard");
       fetchMe()
     },[])
 

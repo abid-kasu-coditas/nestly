@@ -57,7 +57,6 @@ const LoginPage = () => {
   };
 
   const fetchOTP = async (data: LoginData) => {
-    console.log("OTP Requested", data);
     const emailData = { email : data.email}
     const response = await fetchOTPservice(emailData);
     if(response.data){
