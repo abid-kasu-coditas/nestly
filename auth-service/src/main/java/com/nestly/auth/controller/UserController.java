@@ -1,53 +1,120 @@
-package com.nestly.auth.controller;
+package com.nestly.auth.service;
 
-import com.nestly.auth.dto.*;
-import com.nestly.auth.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.nestly.auth.dto.UpdateProfileRequest;
+import com.nestly.auth.dto.UserResponse;
+import com.nestly.auth.entity.User;
+import com.nestly.auth.repository.UserRepository;
+import com.nestly.shared.util.S3PresignHelper;
+import java.util.UUID;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
-@RestController
-@RequestMapping("/users")
-public class UserController {
+@Service
+public class UserService {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
+    private final S3PresignHelper s3PresignHelper;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserService(
+            UserRepository userRepository,
+            S3PresignHelper s3PresignHelper) {
+
+        this.userRepository = userRepository;
+        this.s3PresignHelper = s3PresignHelper;
     }
 
-    @GetMapping("/me")
-     public UserResponse me(@Parameter(hidden = true) @RequestHeader("X-User-Id") String userId) {
-        return userService.getUser(userId);
+    public UserResponse getUser(String userId) {
+        return toResponse(find(userId));
     }
 
-    @PutMapping("/update-profile")
-     public UserResponse updateMe(
-            @Parameter(hidden = true) @RequestHeader("X-User-Id") String userId,
-            @RequestBody UpdateProfileRequest request) {
-        return userService.updateProfile(userId, request);
+    public UserResponse updateProfile(
+            String userId,
+            UpdateProfileRequest request) {
+
+        User user = find(userId);
+
+        if (request.getDisplayName() != null) {
+            user.setDisplayName(request.getDisplayName());
+        }
+
+        if (request.getContact() != null) {
+            user.setContact(request.getContact());
+        }
+
+        return toResponse(userRepository.save(user));
     }
 
-    @PostMapping("/upload-profile-photo")
-     public SingleResponse presign(
-            @Parameter(hidden = true) @RequestHeader("X-User-Id") String userId,
-            @Valid @RequestBody PresignRequest request) {
-        return userService.presign(userId, request);
+    public UserResponse uploadProfilePhoto(
+            String userId,
+            MultipartFile file) {
+
+        User user = find(userId);
+
+        if (file == null || file.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Profile photo cannot be empty"
+            );
+        }
+
+        String key = s3PresignHelper.presignPut(
+                "users/" + userId + "/profile",
+                file
+        );
+
+        user.setProfilePictureKey(key);
+
+        return toResponse(userRepository.save(user));
     }
 
-    @GetMapping("/{id}")
-     public UserResponse getById(@PathVariable String id) {
-        return userService.getUser(id);
+    private User find(String userId) {
+
+        UUID id;
+
+        try {
+            id = UUID.fromString(userId);
+        } catch (IllegalArgumentException exception) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid user ID"
+            );
+        }
+
+        return userRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "User not found"
+                        )
+                );
     }
 
+    private UserResponse toResponse(User user) {
+
+        return UserResponse.builder()
+                .id(user.getId().toString())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .displayName(user.getDisplayName())
+                .contact(user.getContact())
+                .profilePictureUrl(
+                        user.getProfilePictureKey() == null
+                                ? null
+                                : s3PresignHelper.presignGet(
+                                user.getProfilePictureKey()
+                        )
+                )
+                .verificationDocUrl(
+                        user.getVerificationDocKey() == null
+                                ? null
+                                : s3PresignHelper.presignGet(
+                                user.getVerificationDocKey()
+                        )
+                )
+                .createdAt(user.getCreatedAt())
+                .build();
+    }
 }

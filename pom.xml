@@ -23,9 +23,7 @@
         <module>auth-service</module>
         <module>api-gateway</module>
         <module>notification-service</module>
-        <module>verification-service</module>
-        <module>listing-service</module>
-    </modules>
+     </modules>
 
     <properties>
         <java.version>17</java.version>

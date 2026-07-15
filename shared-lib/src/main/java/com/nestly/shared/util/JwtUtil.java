@@ -9,19 +9,21 @@ import javax.crypto.SecretKey;
 
 public class JwtUtil {
 
+    private static final long EXPIRY_MILLIS = 24L * 60 * 60 * 1000; // 24 hours
+
     private final SecretKey key;
 
     public JwtUtil(String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String userId, String role, String email,long tokenExpiry) {
+    public String generateToken(String userId, String role, String email) {
         return Jwts.builder()
                 .subject(userId)
                 .claim("role", role)
                 .claim("email", email)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + tokenExpiry))
+                .expiration(new Date(System.currentTimeMillis() + EXPIRY_MILLIS))
                 .signWith(key)
                 .compact();
     }
