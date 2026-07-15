@@ -18,7 +18,7 @@ const DashboardRedirector = () => {
                 console.log("admin")
                 navigate('/manage')
                 break;
-            case "USER":
+            case "TENANT":
                 navigate('/properties')
                 break;
         }

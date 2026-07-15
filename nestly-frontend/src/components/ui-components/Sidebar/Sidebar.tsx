@@ -7,8 +7,7 @@ import type { SidebarProps } from './Sidebar.types';
 
 const Sidebar = ({ closeSidebarFn }:SidebarProps) => {
 
-  // const userRole= useAppSelector(state => state.authUser.user?.role)
-  const userRole = "Admin"; 
+  const userRole= useAppSelector(state => state.authUser.user?.role)
   const sidebarItems = Sidebar_items[(userRole ?? "") as keyof typeof Sidebar_items]
   console.log(userRole)
   console.log(sidebarItems)

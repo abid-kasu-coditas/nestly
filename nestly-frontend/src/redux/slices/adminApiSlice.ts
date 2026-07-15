@@ -5,7 +5,7 @@ export const adminApiSlice = apiSlice.injectEndpoints({
     endpoints: (build) => ({
             addUser : build.mutation({
                 query: (data: AddUserData) => ({
-                    url: 'admin/create-account',
+                    url: 'auth/admin/create-account',
                     body: data,
                     method: "POST",
                     headers: {

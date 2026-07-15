@@ -1,0 +1,20 @@
+.Table {
+    min-width: 100%;
+    text-align: center;
+}
+
+.TableHead {
+    background-color: gray;
+}
+
+.Th {
+    padding: 0.5rem;
+}
+
+.TData {
+    padding: 0.5rem;
+    border: thin solid transparent;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    border-left-color: #000;
+}

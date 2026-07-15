@@ -1,17 +1,16 @@
 .DashboardLayout {
     display: grid;
     grid-template-columns: auto 1fr;
-
 }
 
 
 .SidebarContainer {
     display: flex;
+    padding: 1rem;
 }
 
 
 .OpenSidebar {
-    padding: 1rem;
     position: absolute;
 }
 

@@ -1,25 +1,32 @@
 import { Controller, useForm } from 'react-hook-form'
 import styles from './AddUserModal.module.scss'
-import type { AddUserData } from './AddUserModal.types';
+import type { AddUserData, AddUserModalProps } from './AddUserModal.types';
 import { PrimaryBtn, SecondaryBtn } from '../Button/Button';
 import { useAddUserMutation } from '../../../redux/slices/adminApiSlice';
+import { toast } from 'react-toastify';
 
-const AddUserModal = () => {
+const AddUserModal = ({ closeModalFn }: AddUserModalProps) => {
 
     const { handleSubmit, control, formState: { isLoading }} = useForm<AddUserData>();
 
     const [ addUser ] = useAddUserMutation();
 
     const handleAddUser = async(data: AddUserData) => {
-        console.log("adding user");
-        const response = await addUser(data).unwrap();
-        console.log(response);
-        
+        try {
+            console.log("adding user");
+            const response = await addUser(data).unwrap();
+            if(response.id){
+                toast.success("User added Successfully!");
+                closeModalFn();
+            }   
+        } catch (error) {
+            toast.error("Error!")
+        }
     }
 
   return (
-    <div className={styles.AddUserModal}>
-        <div className={styles.AddUserModalContainer}>
+    <div onClick={()=>{closeModalFn()}} className={styles.AddUserModal}>
+        <div onClick={(e)=>{e.stopPropagation()}} className={styles.AddUserModalContainer}>
             <form onSubmit={handleSubmit(handleAddUser)} className={styles.AddUserModalForm}>
                 <h2>Add User</h2>
                 <Controller 
@@ -41,7 +48,9 @@ const AddUserModal = () => {
                     }}
                 />
                 <div className={styles.BtnContainer}>
-                    <SecondaryBtn>Cancel</SecondaryBtn>
+                    <SecondaryBtn onClick={()=>{
+                        closeModalFn()
+                    }}>Cancel</SecondaryBtn>
                     <PrimaryBtn>{isLoading ? "Adding..." : "Add"}</PrimaryBtn>
                 </div>
             </form>

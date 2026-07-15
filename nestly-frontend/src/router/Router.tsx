@@ -7,6 +7,7 @@ import DashboardLayout from "../pages/DashboardLayout/DashboardLayout";
 import DashboardRedirector from "../components/ui-components/DashboardRedirector/DashboardRedirector";
 import ManageUsers from "../pages/ManageUsers/ManageUsers";
 import PropertyListing from "../pages/PropertyListing/PropertyListing";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 export const router = createBrowserRouter([
     {
@@ -40,7 +41,11 @@ export const router = createBrowserRouter([
                             {
                                 element:<PropertyListing/>,
                                 path: "/listings"
-                            }
+                            },
+                            {
+                                element:<ProfilePage/>,
+                                path: "/profile"
+                            },
                         ]
                     }
                 ]

@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useNavigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { useGetMeMutation } from '../../../redux/slices/authApiSlice';
 import { saveUser } from '../../../redux/slices/userSlice';
 import { useEffect } from 'react';
@@ -16,16 +16,17 @@ const AuthGuard = () => {
       if(response.id){
         dispatch(saveUser(response))
       }
+      console.log(response)
 
     }
-    if(!token) {
-        return <Navigate to="/login"/>
-    }
-
+    
     useEffect(()=>{
       fetchMe()
     },[])
-
+    
+    if(!token) {
+        return <Navigate to="/login"/>
+    }
 
   return (
     <Outlet />

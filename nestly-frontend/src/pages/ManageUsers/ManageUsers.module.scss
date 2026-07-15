@@ -3,8 +3,9 @@
 .ManageUsers {
     display: grid;
     grid-template-rows: auto 1fr;
-    padding: 2rem;
+    padding: 1rem 2rem;
     min-width: 100%;   
+    z-index: 2;
     position: relative; 
 }
 
@@ -14,7 +15,16 @@
     gap: 1rem;
 }
 
+.UsersList {
+    padding: 1rem;
+}
 
 .AddUserFormContainer {
     position: relative;
 }
+
+.DeleteBtn {
+    &:hover {
+        color: black;
+    } 
+}  
