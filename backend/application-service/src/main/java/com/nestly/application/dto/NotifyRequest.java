@@ -1,0 +1,17 @@
+package com.nestly.application.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class NotifyRequest {
+    private String userId;
+    private String message;
+    private String emailSubject;
+    private String emailBody;
+}
