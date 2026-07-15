@@ -5,12 +5,13 @@ import type { LoginAction, LoginData, LoginState } from "./LoginPage.types";
 import { useReducer } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircleOutlined";
 import { useNavigate } from "react-router-dom";
-import { saveUser, userSlice } from "../../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 import {
   useFetchOTPMutation,
   useLoginMutation,
 } from "../../redux/slices/authApiSlice";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchema } from "./LoginPage.schema";
 
 const initialState = {
   otpVerified: false,
@@ -42,8 +43,14 @@ const LoginPage = () => {
   const {
     handleSubmit,
     control,
-    formState: { isLoading },
-  } = useForm<LoginData>();
+    getValues,
+    formState: { isLoading, errors },
+    trigger,
+    
+  } = useForm<LoginData>({
+    resolver: zodResolver(LoginSchema),
+
+  });
 
   const [fetchOTPservice] = useFetchOTPMutation();
 
@@ -57,12 +64,15 @@ const LoginPage = () => {
   };
 
   const fetchOTP = async (data: LoginData) => {
-    const emailData = { email : data.email}
-    const response = await fetchOTPservice(emailData);
-    if(response.data){
-        dispatch({type: "setOtpSent"})
-    }
-  };
+      const isValid = await trigger("email");
+      if (!isValid) return;
+      const response = await fetchOTPservice({
+        email: getValues("email"),
+      });
+      if (response.data) {
+        dispatch({ type: "setOtpSent" });
+      }
+    };
 
 
   return (
@@ -96,6 +106,13 @@ const LoginPage = () => {
                       );
                     }}
                   />
+
+                  {errors.code && (
+                    <span className={styles.Error}>
+                      {errors.code.message}
+                    </span>
+                  )}
+
                   {state.otpVerified ? (
                     <CheckCircleIcon color="success" />
                   ) : (
@@ -118,6 +135,12 @@ const LoginPage = () => {
                       );
                     }}
                   />
+                   {errors.email && (
+                      <span className={styles.Error}>
+                        {errors.email.message}
+                      </span>
+                    )}
+
                   <PrimaryBtn>Get OTP</PrimaryBtn>
                 </>
               )}
