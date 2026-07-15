@@ -1,0 +1,29 @@
+@use "/src/assets/styles/variables" as *;
+
+.PrimaryBtn {
+    border: $secondary-color;
+    background-color: transparent;
+    border: thin solid $secondary-color;
+    color: $secondary-color;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius;
+    &:hover {
+        background-color: $secondary-color;
+        color: $primary-color;
+    }
+}
+
+.SecondaryBtn {
+    border: $secondaryBtn-color;
+    background-color: transparent;
+    border: thin solid $secondaryBtn-color;
+    color: $secondaryBtn-color;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius;
+    &:hover {
+        background-color: $secondaryBtn-color;
+        color: $primary-color;
+    }
+}

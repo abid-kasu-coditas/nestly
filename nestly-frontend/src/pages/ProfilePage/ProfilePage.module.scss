@@ -1,0 +1,15 @@
+@use "/src/assets/styles/mixin" as *;
+
+.ProfilePage {
+    @include FlexBox;    
+}
+
+.ProfilePageForm {
+    @include FlexBox;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.UploadBtn {
+    @include FlexBox;
+}

@@ -1,0 +1,26 @@
+@use "/src/assets/styles/mixin" as *;
+
+.AddUserModal {
+    @include AbsolutePosition;
+    @include FlexBox;
+    background-color: rgba(128, 128, 128, 0.514);
+    
+}
+
+
+.Input {
+    padding: 0.5rem 1rem;
+}
+
+.AddUserModalForm {
+    background-color: white;
+    padding: 1rem;
+    @include FlexBox;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.BtnContainer {
+    @include FlexBox;
+    gap: 1rem;
+}

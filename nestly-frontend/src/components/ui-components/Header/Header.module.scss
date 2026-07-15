@@ -1,0 +1,17 @@
+@use "/src/assets/styles/variables" as *;
+@use "/src/assets/styles/mixin" as *;
+
+.Header {
+    background-color: $primary-color;
+    padding: 1rem;
+    @include FlexBox;
+    justify-content: space-between;
+    }
+
+
+.Logo {
+    color: $secondary-color;
+    font-family: $logo-font-family;
+    font-size: 1.8rem;
+    cursor: pointer;
+}

@@ -1,0 +1,20 @@
+.DashboardLayout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+
+.SidebarContainer {
+    display: flex;
+}
+
+
+
+.OpenSidebar {
+    position: absolute;
+}
+
+.OpenSidebarBtn {
+    cursor: pointer;
+}
+
