@@ -17,10 +17,12 @@ def add_media(db: Session, property_id: UUID, file_url: str, media_type: MediaTy
     return media
 
 def get_comparable_rents(db: Session, location: str, exclude_id: UUID | None = None, limit: int = 10) -> list[int]:
+    
     rent = db.query(Properties.rent_amount).filter(Properties.location == location,Properties.status == Property_status.APPROVED)
     if exclude_id:
         rent = rent.filter(Properties.id != exclude_id)
     return [r[0] for r in rent.limit(limit).all()]
+    
 
 def get_property_by_id(db: Session, property_id: UUID) -> Properties | None:
     return db.query(Properties).filter(Properties.id == property_id).first()

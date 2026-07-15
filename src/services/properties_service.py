@@ -10,6 +10,7 @@ def create_listing(db: Session,owner_id, title: str, description: str, location:
     ownership_docs: list[UploadFile],
     background_tasks: BackgroundTasks):
     
+    
     db_property = properties_repo.create_property(db, owner_id, title, description, location, rent_amount, amenities)
 
     for photo in photos:

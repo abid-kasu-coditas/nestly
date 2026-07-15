@@ -8,7 +8,8 @@ from uuid import UUID
 
 router = APIRouter(prefix="/properties", tags=["Properties"])
 
-@router.post("/", response_model=Properties_response_schema)
+
+@router.post("/apply_listing", response_model=Properties_response_schema)
 async def create_listing_endpoint(
     background_tasks: BackgroundTasks,
     title: str = Form(...),
