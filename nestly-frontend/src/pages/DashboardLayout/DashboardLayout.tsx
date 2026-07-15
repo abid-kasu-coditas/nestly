@@ -7,20 +7,20 @@ import { ViewSidebarOutlined } from '@mui/icons-material'
 const DashboardLayout = () => {
 
   const [isSidebarVisible, setIsSidebarVisible] = useState(false)
-
+  
   return (
     <div className={styles.DashboardLayout}>
-          <div className={styles.SidebarContainer}>
+          <div style={!isSidebarVisible ? {padding:"1rem"} : {padding:"0"}} className={styles.SidebarContainer}>
             {isSidebarVisible ? <Sidebar closeSidebarFn={()=>{
-            setIsSidebarVisible(false)
-          }}/> : 
+              setIsSidebarVisible(false)
+            }}/> : 
             <span onClick={()=>{
               setIsSidebarVisible(true)
             }} className={styles.OpenSidebar}>
               <ViewSidebarOutlined className={styles.OpenSidebarBtn} />
             </span>
           }
-          </div>
+      </div>
             <Outlet />
       </div>
   )

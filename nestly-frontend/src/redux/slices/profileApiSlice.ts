@@ -11,7 +11,6 @@ export const profileApiSlice = apiSlice.injectEndpoints({
                         'Content-Type': 'multipart/form-data',
                         "token" : `Bearer ${localStorage.getItem('token')}`
                     },
-                    formData : true
                 })
             }),
              
