@@ -23,7 +23,7 @@ async def create_listing_endpoint(
 ):
     db_property = create_listing(
         db=db,
-        owner_id=current_user.id,
+        owner_id=current_user,
         title=title,
         description=description,
         location=location,
