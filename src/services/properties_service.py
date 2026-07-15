@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import UploadFile, BackgroundTasks
 from src.repositories import properties_repo
-from src.models.properties import MediaType
+from src.models.documents import MediaType
 from src.utils.s3_client import upload_file_to_s3
 from src.services.verification_service import run_verification_panel_task_sync
 

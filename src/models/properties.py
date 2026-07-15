@@ -13,15 +13,10 @@ class Property_status(str, enum.Enum):
     CHANGES_NEEDED = "Changes needed"
 
 
-class MediaType(str, enum.Enum):
-    PHOTO = "Photo"
-    OWNERSHIP_DOC = "OwnershipDoc"
-
-
 class Properties(TimeStampedBase):
     __tablename__ = "properties_table"
 
-    owner_id = Column(UUID(as_uuid=True),ForeignKey("users_table.id") , nullable=False, index=True)
+    owner_id = Column(UUID(as_uuid=True), nullable=False, index=True)
     title = Column(String, nullable=False)
     description = Column(String, nullable=False)
     location = Column(String, nullable=False, index=True)

@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     
     
-    DATABASE_URL : str
+    DATABASE_URL: str
     
     
     AWS_BUCKET_NAME : str
@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     AWS_DEFAULT_REGION : str
     
     
+    GROQ_API_KEY : str
+    
     class Config:
         env_file = ".env"
         case_sensitive = True
@@ -21,7 +23,7 @@ class Settings(BaseSettings):
 
 @lru_cache(maxsize=1)
 def get_settings():
-    return Settings
+    return Settings()
 
 
 settings = get_settings()

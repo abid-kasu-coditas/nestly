@@ -6,7 +6,6 @@ from sqlalchemy.dialects.postgresql import UUID
 
 
 
-
 class MediaType(str, enum.Enum):
     PHOTO = "Photo"
     OWNERSHIP_DOC = "OwnershipDoc"

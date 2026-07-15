@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from src.models.properties import Properties, PropertyMedia, Property_status, MediaType
+from src.models.properties import Properties, Property_status
+from src.models.documents import PropertyMedia , MediaType
 from uuid import UUID
 
 def create_property(db: Session, owner_id: UUID, title: str, description: str,location: str, rent_amount: int, amenities: str) -> Properties:

@@ -1,6 +1,6 @@
 import asyncio
 from src.db.session import session_local
-from src.repositories import property_repo
+from src.repositories import properties_repo
 from src.models.report import VerificationReport, ReportStatus
 from src.services.reviewers_service import review_completeness, review_consistency, review_pricing, review_red_flags
 from src.services.consolidate_service import consolidate
@@ -9,8 +9,8 @@ from src.services.consolidate_service import consolidate
 async def run_verification_panel_task(property_id):
     db = session_local()
     try:
-        prop = property_repo.get_property_by_id(db, property_id)
-        comparables = property_repo.get_comparable_rents(db, prop.location, exclude_id=prop.id)
+        prop = properties_repo.get_property_by_id(db, property_id)
+        comparables = properties_repo.get_comparable_rents(db, prop.location, exclude_id=prop.id)
         
         listing_json = str({
             "title": prop.title,

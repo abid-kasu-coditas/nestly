@@ -1,49 +1,31 @@
 import boto3
-from src.core.config import settings
-from fastapi import HTTPException
 import uuid
-import logging
-from botocore.exceptions import ClientError
+from fastapi import UploadFile
+from src.core.config import settings
 
+s3_client = boto3.client(
+    "s3",
+    aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+    region_name=settings.AWS_DEFAULT_REGION,
+)
 
-BUCKET_NAME = settings.AWS_BUCKET_NAME
-s3_client = boto3.client("s3",aws_access_key_id=settings.AWS_ACCESS_KEY_ID,aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,region_name=settings.AWS_DEFAULT_REGION)
+def upload_file_to_s3(file: UploadFile, folder: str) -> str:
+    ext = file.filename.rsplit(".", 1)[-1].lower()
+    unique_name = f"{folder}/{uuid.uuid4()}.{ext}"
 
+    s3_client.upload_fileobj(
+        file.file,
+        settings.AWS_BUCKET_NAME,
+        unique_name,
+    )
 
+    return unique_name   
 
-def upload_file_to_s3(doc: str , folder : str) -> str:
-    
-    #upload the file and return the url 
-    
-    ext = doc.filename.rsplit(".", 1)[-1].lower()
-    
-    
-    if ext not in {"pdf", "jpg", "png", "docx"}:
-            raise HTTPException(status_code=400, detail="Invalid file type. Allowed: pdf, jpg, png, docx")
-    
-    object_name = f"{uuid.uuid4()}_house"
-    
-    try:
-        
-        response = s3_client.file_upload(doc.file , BUCKET_NAME , object_name)
-        
-    except ClientError as e:
-        logging.error(e)
-        return False
-    
-    return key
+def generate_presigned_url(key: str, expires_in: int = 3600) -> str:
 
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
+    return s3_client.generate_presigned_url(
+        "get_object",
+        Params={"Bucket": settings.AWS_BUCKET_NAME, "Key": key},
+        ExpiresIn=expires_in,  
+    )
