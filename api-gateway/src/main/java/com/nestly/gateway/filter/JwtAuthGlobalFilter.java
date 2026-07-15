@@ -17,8 +17,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class JwtAuthGlobalFilter implements GlobalFilter, Ordered {
 
-    private static final Pattern LISTING_DETAIL = Pattern.compile("^/listings/[0-9a-fA-F-]{36}$");
-    private static final Pattern SWAGGER_ASSET = Pattern.compile("^/(swagger-ui|webjars|docs)(/.*)?");
+     private static final Pattern SWAGGER_ASSET = Pattern.compile("^/(swagger-ui|webjars|docs)(/.*)?");
 
     private final JwtUtil jwtUtil;
 
@@ -66,9 +65,6 @@ public class JwtAuthGlobalFilter implements GlobalFilter, Ordered {
             return true;
         }
         if ("GET".equals(method) && path.equals("/listings")) {
-            return true;
-        }
-        if ("GET".equals(method) && LISTING_DETAIL.matcher(path).matches()) {
             return true;
         }
         if (SWAGGER_ASSET.matcher(path).matches()) {

@@ -4,8 +4,20 @@ server:
 spring:
   application:
     name: api-gateway
+
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          "[/**]":
+            allowedOriginPatterns:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
       routes:
         - id: auth-service-docs
           uri: ${nestly.services.auth}
@@ -14,27 +26,6 @@ spring:
           filters:
             - RewritePath=/docs/auth/v3/api-docs, /v3/api-docs
 
-        - id: listing-service-docs
-          uri: ${nestly.services.listing}
-          predicates:
-            - Path=/docs/listing/v3/api-docs
-          filters:
-            - RewritePath=/docs/listing/v3/api-docs, /v3/api-docs
-
-        - id: verification-service-docs
-          uri: ${nestly.services.verification}
-          predicates:
-            - Path=/docs/verification/v3/api-docs
-          filters:
-            - RewritePath=/docs/verification/v3/api-docs, /v3/api-docs
-
-        - id: application-service-docs
-          uri: ${nestly.services.application}
-          predicates:
-            - Path=/docs/application/v3/api-docs
-          filters:
-            - RewritePath=/docs/application/v3/api-docs, /v3/api-docs
-
         - id: notification-service-docs
           uri: ${nestly.services.notification}
           predicates:
@@ -42,26 +33,10 @@ spring:
           filters:
             - RewritePath=/docs/notification/v3/api-docs, /v3/api-docs
 
-        # --- Service routes ---
         - id: auth-service
           uri: ${nestly.services.auth}
           predicates:
             - Path=/auth/**,/users/**
-
-        - id: listing-service
-          uri: ${nestly.services.listing}
-          predicates:
-            - Path=/listings/**
-
-        - id: verification-service
-          uri: ${nestly.services.verification}
-          predicates:
-            - Path=/verification/**
-
-        - id: application-service
-          uri: ${nestly.services.application}
-          predicates:
-            - Path=/applications/**
 
         - id: notification-service
           uri: ${nestly.services.notification}
@@ -69,14 +44,10 @@ spring:
             - Path=/notifications/**,/internal/**
 
 nestly:
-
   jwt:
     secret: change-me-nestly-dev-secret-key-32chars-min!
   services:
     auth: http://localhost:8081
-    listing: http://localhost:8082
-    verification: http://localhost:8083
-    application: http://localhost:8084
     notification: http://localhost:8085
 
 springdoc:
@@ -85,13 +56,8 @@ springdoc:
     urls:
       - name: Auth Service
         url: /docs/auth/v3/api-docs
-      - name: Listing Service
-        url: /docs/listing/v3/api-docs
-      - name: Verification Service
-        url: /docs/verification/v3/api-docs
-      - name: Application Service
-        url: /docs/application/v3/api-docs
       - name: Notification Service
         url: /docs/notification/v3/api-docs
+
   api-docs:
     enabled: false

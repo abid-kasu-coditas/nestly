@@ -22,10 +22,9 @@
         <module>shared-lib</module>
         <module>auth-service</module>
         <module>api-gateway</module>
-        <module>listing-service</module>
-        <module>verification-service</module>
-        <module>application-service</module>
         <module>notification-service</module>
+        <module>verification-service</module>
+        <module>listing-service</module>
     </modules>
 
     <properties>
